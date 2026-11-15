@@ -28,6 +28,15 @@ education:
 qualification_rules:
   total_yoe_years: 1.8
   max_allowed_required_yoe: 3.0
+  min_must_have_match_ratio: 0.40
+  core_anchor_skills:
+    - "Python"
+    - "JavaScript"
+    - "Django"
+    - "FastAPI"
+    - "React.js"
+    - "React Native"
+    - "Node.js"
   target_role_types:
     - "backend"
     - "full-stack"
@@ -115,6 +124,7 @@ work_experience:
     role: "Associate Software Engineer"
     start_date: "Aug 2025"
     end_date: "Jul 2026"
+    tech_stack: ["Python", "FastAPI", "React.js", "React Native", "Redis", "MySQL", "SQL", "AWS", "RAG", "Razorpay", "Cashfree", "Dodo", "Stripe", "Cloudflare", "Git"]
     locked_metrics:
       - "2 mobile apps"
       - "4 websites"
@@ -135,6 +145,7 @@ work_experience:
     role: "Full Stack Developer Intern"
     start_date: "Dec 2024"
     end_date: "Jan 2025"
+    tech_stack: ["Python", "Django", "Flutter", "MediaPipe", "REST APIs", "Redis", "Facial Landmark Analysis", "Voice Signal Processing", "Feature Engineering"]
     locked_metrics: []
     base_bullets:
       - "Constructed a real-time analysis system using Django and Flutter, handling facial and voice-based biometrics."
@@ -146,6 +157,7 @@ work_experience:
     role: "Backend Developer Intern"
     start_date: "Feb 2024"
     end_date: "Jul 2024"
+    tech_stack: ["Python", "Django", "Node-RED", "REST APIs", "PostgreSQL", "AWS", "AWS Lambda", "AWS SQS", "LLaMA 2", "LangChain", "RAG", "Vector DBs", "Object-Oriented Programming"]
     locked_metrics:
       - "50%"
       - "30%"
@@ -160,7 +172,7 @@ projects:
   - project_id: "proj_quickchat"
     name: "QuickChat - Scalable Real-time Messaging Platform"
     repo_url: "https://github.com/AzariushHussain"
-    tech_stack: ["Node.js", "Express.js", "Redis", "WebSockets", "Pub/Sub Architecture", "MongoDB", "React.js", "Redux", "Twilio", "JWT"]
+    tech_stack: ["JavaScript", "Node.js", "Express.js", "Redis", "Redis Pub/Sub", "WebSockets", "Pub/Sub Architecture", "MongoDB", "React.js", "Redux", "Twilio", "JWT"]
     locked_metrics: []
     base_bullets:
       - "Architected a real-time messaging backend using Redis Pub/Sub and WebSockets for scalable live communication."
@@ -170,7 +182,7 @@ projects:
   - project_id: "proj_webrtc"
     name: "WebRTC Video Conferencing Application"
     repo_url: "https://github.com/AzariushHussain"
-    tech_stack: ["MongoDB", "Express.js", "React.js", "Node.js", "WebRTC", "SFU Architecture", "Socket.IO"]
+    tech_stack: ["JavaScript", "MongoDB", "Express.js", "React.js", "Node.js", "WebRTC", "SFU Architecture", "Socket.IO"]
     locked_metrics: []
     base_bullets:
       - "Engineered a group video calling platform using SFU architecture for efficient stream routing."

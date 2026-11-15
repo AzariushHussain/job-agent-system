@@ -5,12 +5,11 @@ import yaml
 from pydantic import BaseModel, Field
 
 
-# =====================================================================
-# 1. CANDIDATE PROFILE MODELS (Loaded from candidate_profile.yaml)
-# =====================================================================
 class QualificationRules(BaseModel):
     total_yoe_years: float
     max_allowed_required_yoe: float
+    min_must_have_match_ratio: float = 0.40
+    core_anchor_skills: List[str] = Field(default_factory=list)
     target_role_types: List[str]
     excluded_role_levels: List[str]
     reject_if_strict_btech_be_only: bool
@@ -22,6 +21,7 @@ class WorkExperienceItem(BaseModel):
     role: str
     start_date: str
     end_date: str
+    tech_stack: List[str] = Field(default_factory=list)
     locked_metrics: List[str] = Field(default_factory=list)
     base_bullets: List[str]
 
@@ -58,26 +58,40 @@ class CandidateProfile(BaseModel):
         return skills
 
     @property
+    def valid_experience_ids(self) -> set[str]:
+        return {e.exp_id for e in self.work_experience}
+
+    @property
     def valid_project_ids(self) -> set[str]:
         return {p.project_id for p in self.projects}
 
     @property
     def valid_urls(self) -> set[str]:
         urls = {p.repo_url.rstrip("/") for p in self.projects}
-        for key in ("github_url", "portfolio_url"):
-            if key in self.candidate:
+        for key in ("github_url", "linkedin_url", "portfolio_url"):
+            if key in self.candidate and self.candidate[key]:
                 urls.add(str(self.candidate[key]).rstrip("/"))
         return urls
 
 
-# =====================================================================
-# 2. AGENT ARTIFACT SCHEMAS (Gatekeeper & Outreach Writer)
-# =====================================================================
 class ParsedJD(BaseModel):
     company_name: str
     role_title: str
     location: str
     is_remote: bool = False
+    role_category: Literal[
+        "backend",
+        "full-stack",
+        "software_engineer",
+        "ai_engineer",
+        "genai",
+        "frontend_only",
+        "mobile_only",
+        "devops_sre",
+        "qa_testing",
+        "data_analyst",
+        "other",
+    ] = "software_engineer"
     min_required_yoe: Optional[float] = Field(
         default=None, description="Minimum years of experience explicitly required"
     )
@@ -88,36 +102,26 @@ class ParsedJD(BaseModel):
     role_level: Literal["intern", "entry", "mid", "senior", "staff", "unknown"] = "entry"
     must_have_skills: List[str] = Field(default_factory=list)
     nice_to_have_skills: List[str] = Field(default_factory=list)
-    matched_project_ids: List[str] = Field(
-        default_factory=list,
-        description="1 to 2 project_ids from candidate_profile most relevant to this JD",
-    )
+    matched_experience_ids: List[str] = Field(default_factory=list)
+    matched_project_ids: List[str] = Field(default_factory=list)
 
 
 class OutreachDraftPayload(BaseModel):
-    recipient_role_or_name: str = Field(
-        default="Hiring Team", description="Target recipient (e.g., CTO, Engineering Lead, Hiring Team)"
-    )
-    recipient_email: Optional[str] = Field(
-        default=None, description="Discovered direct or career/support email if available"
-    )
+    recipient_role_or_name: str = Field(default="Hiring Team")
+    recipient_email: Optional[str] = Field(default=None)
     email_subject: str
-    email_body: str = Field(
-        description="Concise cold email body (under 180 words) referencing matched projects and attached resume"
-    )
-    linkedin_note: str = Field(
-        description="Short LinkedIn connection/DM pitch (under 400 characters)"
-    )
-    claimed_skills: List[str] = Field(
-        description="Skills explicitly claimed in the outreach message; must exist in allowed_skills"
+    email_body: str
+    linkedin_note: str
+    claimed_skills: List[str]
+    referenced_experience_ids: List[str] = Field(
+        default_factory=list,
+        description="exp_ids from candidate_profile cited in the email",
     )
     referenced_project_ids: List[str] = Field(
-        description="project_ids cited in the outreach draft"
-    )
-    included_urls: List[str] = Field(
         default_factory=list,
-        description="All portfolio or GitHub URLs included in the outreach text",
+        description="project_ids from candidate_profile cited in the email",
     )
+    included_urls: List[str] = Field(default_factory=list)
 
 
 class HarnessCheckResult(BaseModel):
@@ -132,17 +136,17 @@ class CriticEvaluation(BaseModel):
     revision_instructions: Optional[str] = None
 
 
-# =====================================================================
-# 3. LANGGRAPH WORKING MEMORY STATE
-# =====================================================================
 class JobApplicationState(TypedDict):
     job_url: str
     raw_jd_text: str
 
-    # Gatekeeper outputs
+    # Gatekeeper & Matcher outputs
     parsed_jd: Optional[ParsedJD]
     is_qualified: Optional[bool]
     disqualification_reason: Optional[str]
+    tech_match_score: Optional[float]
+    matched_skills: Optional[List[str]]
+    missing_must_have_skills: Optional[List[str]]
 
     # Outreach Writer & Critic loop outputs
     outreach_draft: Optional[OutreachDraftPayload]
