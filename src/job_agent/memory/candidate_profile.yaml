@@ -1,0 +1,178 @@
+candidate:
+  name: "Azariush Hussain"
+  title: "Software Engineer | Backend Developer | Full Stack Developer"
+  email: "azariushhussain@gmail.com"
+  phone: "+91 6299242612"
+  location: "Bangalore, India"
+  open_to_remote: true
+  open_to_relocation_india: true
+  linkedin_url: "https://linkedin.com/in/azariush-hussain"
+  github_url: "https://github.com/AzariushHussain"
+  static_resume_path: "assets/AzariushHussainResume.pdf"
+  summary: "Software Engineer with nearly 2 years of combined experience developing scalable backend services, REST APIs, full-stack applications, and AI-powered solutions."
+  leetcode_highlight: "450+ days problem-solving streak on LeetCode"
+  certifications:
+    - "JavaScript - HackerRank"
+    - "Python - HackerRank"
+    - "SQL (Advanced) Certificate - HackerRank"
+    - "NGINX - LinkedIn"
+
+education:
+  degree: "Bachelor of Science (B.Sc - Computer Science)"
+  short_degree: "B.Sc Computer Science"
+  university: "Bangalore University, Bangalore, India"
+  start_date: "July 2022"
+  end_date: "July 2025"
+  graduation_year: 2025
+
+qualification_rules:
+  total_yoe_years: 1.8
+  max_allowed_required_yoe: 3.0
+  target_role_types:
+    - "backend"
+    - "full-stack"
+    - "software_engineer"
+    - "ai_engineer"
+    - "genai"
+  excluded_role_levels:
+    - "intern"
+    - "internship"
+    - "senior"
+    - "staff"
+    - "principal"
+    - "lead"
+  reject_if_strict_btech_be_only: true
+
+allowed_skills:
+  languages:
+    - "Python"
+    - "JavaScript"
+    - "SQL"
+  backend:
+    - "Django"
+    - "FastAPI"
+    - "REST APIs"
+    - "RESTful API Development"
+    - "Object-Oriented Programming"
+    - "Node.js"
+    - "Express.js"
+    - "Node-RED"
+  frontend_and_mobile:
+    - "React.js"
+    - "React Native"
+    - "Redux"
+    - "Flutter"
+    - "HTML5"
+    - "CSS3"
+  databases_and_caching:
+    - "MySQL"
+    - "PostgreSQL"
+    - "Redis"
+    - "MongoDB"
+    - "Pinecone"
+    - "ChromaDB"
+    - "Vector DBs"
+  cloud_and_infrastructure:
+    - "AWS"
+    - "AWS Lambda"
+    - "AWS SQS"
+    - "AWS EC2"
+    - "AWS S3"
+    - "Docker"
+    - "NGINX"
+    - "Cloudflare"
+  ai_and_ml:
+    - "OpenAI APIs"
+    - "LLaMA"
+    - "LLaMA 2"
+    - "LangChain"
+    - "RAG"
+    - "RAG Architecture"
+    - "MediaPipe"
+    - "Facial Landmark Analysis"
+    - "Voice Signal Processing"
+    - "Feature Engineering"
+  realtime_and_integrations:
+    - "WebSockets"
+    - "Redis Pub/Sub"
+    - "Pub/Sub Architecture"
+    - "WebRTC"
+    - "SFU Architecture"
+    - "Socket.IO"
+    - "Twilio"
+    - "JWT"
+    - "Razorpay"
+    - "Cashfree"
+    - "Dodo"
+    - "Stripe"
+    - "Third-Party API Integration"
+    - "Git"
+    - "Agile"
+
+work_experience:
+  - exp_id: "exp_lyfverse"
+    company: "Lyfverse Technologies"
+    role: "Associate Software Engineer"
+    start_date: "Aug 2025"
+    end_date: "Jul 2026"
+    locked_metrics:
+      - "2 mobile apps"
+      - "4 websites"
+      - "4 payment gateways"
+      - "100%"
+      - "$8/day to $0"
+      - "$2,900+"
+      - "95+"
+    base_bullets:
+      - "Managed end-to-end release delivery and code management across 2 mobile apps and 4 websites, including version control workflows, branching strategy, code reviews, and deployment pipelines."
+      - "Integrated 4 payment gateways (Razorpay, Cashfree, Dodo, and Stripe) enabling secure, multi-provider transaction processing across applications."
+      - "Engineered an in-house image compression and storage pipeline, replacing Cloudflare's paid image transformation service and reducing image-processing costs by 100% (from $8/day to $0), saving an estimated $2,900+ annually."
+      - "Developed an AI-powered note-taking feature using Retrieval-Augmented Generation (RAG) to generate actionable insights and suggestions for monthly student reports."
+      - "Engineered efficient SQL query structures and database workflows (indexing, query optimization, schema design) alongside Redis-based caching for real-time data and Cloudflare HTML/page-level caching, reducing average API response latency and database load on discover.lyfskills.com and contributing to a 95+ average Core Web Vitals score."
+
+  - exp_id: "exp_friggly"
+    company: "Friggly.ai"
+    role: "Full Stack Developer Intern"
+    start_date: "Dec 2024"
+    end_date: "Jan 2025"
+    locked_metrics: []
+    base_bullets:
+      - "Constructed a real-time analysis system using Django and Flutter, handling facial and voice-based biometrics."
+      - "Integrated multiple BTBP APIs for facial feature analysis and streamlined REST API performance by optimizing request-response cycles and latency."
+      - "Leveraged MediaPipe to extract facial and voice landmarks, developing custom algorithms to compute ratios, angles, pitch, formants, and HNR, and translating raw landmark data into interpretive scores for masculinity, confidence, and tone."
+
+  - exp_id: "exp_vibtree"
+    company: "Vibtree (Sobot & OneInbox)"
+    role: "Backend Developer Intern"
+    start_date: "Feb 2024"
+    end_date: "Jul 2024"
+    locked_metrics:
+      - "50%"
+      - "30%"
+    base_bullets:
+      - "Engineered and integrated external communication API services using Django and OOP principles, boosting engagement metrics by 50%."
+      - "Refactored database queries and restructured API architecture, decreasing response times by 30%."
+      - "Implemented and deployed serverless AWS Lambda functions with SQS triggers to accelerate asynchronous workflows."
+      - "Built a RAG-based support assistant (OneInbox) with LLaMA 2 and LangChain for generating real-time call transcripts and summaries."
+      - "Crafted custom Node-RED nodes, enabling users to create flow-based, event-driven operations visually."
+
+projects:
+  - project_id: "proj_quickchat"
+    name: "QuickChat - Scalable Real-time Messaging Platform"
+    repo_url: "https://github.com/AzariushHussain"
+    tech_stack: ["Node.js", "Express.js", "Redis", "WebSockets", "Pub/Sub Architecture", "MongoDB", "React.js", "Redux", "Twilio", "JWT"]
+    locked_metrics: []
+    base_bullets:
+      - "Architected a real-time messaging backend using Redis Pub/Sub and WebSockets for scalable live communication."
+      - "Established secure OTP login flows with Twilio and JWTs for session control."
+      - "Modularized backend logic for better maintainability and service isolation, and orchestrated real-time client communication with Redux and React."
+
+  - project_id: "proj_webrtc"
+    name: "WebRTC Video Conferencing Application"
+    repo_url: "https://github.com/AzariushHussain"
+    tech_stack: ["MongoDB", "Express.js", "React.js", "Node.js", "WebRTC", "SFU Architecture", "Socket.IO"]
+    locked_metrics: []
+    base_bullets:
+      - "Engineered a group video calling platform using SFU architecture for efficient stream routing."
+      - "Built secure, room-based access control with encrypted WebRTC peer connections to ensure privacy and confidentiality."
+      - "Enabled captioning, timeline tracking, and meeting summaries to enhance accessibility and insights."
