@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Callable, Any
 import pytest
 from langgraph.checkpoint.memory import MemorySaver
@@ -13,8 +14,6 @@ from src.job_agent.graph.workflow import compile_job_application_graph
 
 
 class MockStructuredLLM:
-    """Lightweight pure-Python test double implementing `.invoke(messages)`."""
-
     def __init__(self, handler: Callable[[Any], Any]):
         self._handler = handler
 
@@ -27,7 +26,9 @@ def profile() -> CandidateProfile:
     return CandidateProfile.from_yaml(settings.profile_path)
 
 
-def test_gatekeeper_short_circuits_disqualified_jd(profile: CandidateProfile):
+def test_gatekeeper_short_circuits_disqualified_jd(
+    profile: CandidateProfile, tmp_path: Path
+):
     mock_gatekeeper_llm = MockStructuredLLM(
         lambda _: ParsedJD(
             company_name="StrictCorp",
@@ -45,6 +46,8 @@ def test_gatekeeper_short_circuits_disqualified_jd(profile: CandidateProfile):
     graph = compile_job_application_graph(
         profile=profile,
         gatekeeper_llm=mock_gatekeeper_llm,
+        mx_resolver=lambda _: [],
+        output_dir=tmp_path,
         checkpointer=checkpointer,
     )
 
@@ -52,7 +55,7 @@ def test_gatekeeper_short_circuits_disqualified_jd(profile: CandidateProfile):
     result = graph.invoke(
         {
             "job_url": "https://strictcorp.io/jobs/1",
-            "raw_jd_text": "B.Tech/B.E. mandatory. B.Sc not eligible.",
+            "raw_jd_text": "B.Tech/B.E. mandatory for this Backend role. B.Sc graduates are not eligible.",
             "revision_count": 0,
             "audit_log": [],
         },
@@ -64,7 +67,9 @@ def test_gatekeeper_short_circuits_disqualified_jd(profile: CandidateProfile):
     assert result.get("outreach_draft") is None
 
 
-def test_writer_critic_loop_self_corrects_on_harness_violation(profile: CandidateProfile):
+def test_writer_critic_loop_self_corrects_on_harness_violation(
+    profile: CandidateProfile, tmp_path: Path
+):
     mock_gatekeeper_llm = MockStructuredLLM(
         lambda _: ParsedJD(
             company_name="PayScaleAI",
@@ -90,7 +95,8 @@ def test_writer_critic_loop_self_corrects_on_harness_violation(profile: Candidat
                 email_subject="Backend Engineer — Python, FastAPI & Kubernetes",
                 email_body="Hi, I built FastAPI services and Kubernetes clusters at Lyfverse.",
                 linkedin_note="Hi! Applying for the Backend Engineer role.",
-                claimed_skills=["Python", "FastAPI", "Kubernetes"],  # Violates allowlist
+                claimed_skills=["Python", "FastAPI", "Kubernetes"],
+                referenced_experience_ids=["exp_lyfverse"],
                 referenced_project_ids=["proj_quickchat"],
                 included_urls=["https://github.com/AzariushHussain"],
             )
@@ -114,6 +120,7 @@ def test_writer_critic_loop_self_corrects_on_harness_violation(profile: Candidat
                     "(integrated 4 payment gateways & cut image costs 100%). Sent my resume via email!"
                 ),
                 claimed_skills=["Python", "FastAPI", "Redis", "WebSockets", "SQL"],
+                referenced_experience_ids=["exp_lyfverse"],
                 referenced_project_ids=["proj_quickchat"],
                 included_urls=["https://github.com/AzariushHussain"],
             )
@@ -135,6 +142,8 @@ def test_writer_critic_loop_self_corrects_on_harness_violation(profile: Candidat
         gatekeeper_llm=mock_gatekeeper_llm,
         writer_llm=mock_writer_llm,
         critic_llm=mock_critic_llm,
+        mx_resolver=lambda _: [],
+        output_dir=tmp_path,
         checkpointer=checkpointer,
     )
 
@@ -153,4 +162,4 @@ def test_writer_critic_loop_self_corrects_on_harness_violation(profile: Candidat
     assert saved_snapshot.values["critic_eval"].passed is True
     assert call_counter["count"] == 2
     assert "Kubernetes" not in final_state["outreach_draft"].claimed_skills
-    assert len(final_state["audit_log"]) == 5
+    assert final_state["dispatch_status"] == "EXPORTED"

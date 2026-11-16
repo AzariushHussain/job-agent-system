@@ -92,13 +92,8 @@ class ParsedJD(BaseModel):
         "data_analyst",
         "other",
     ] = "software_engineer"
-    min_required_yoe: Optional[float] = Field(
-        default=None, description="Minimum years of experience explicitly required"
-    )
-    strict_btech_be_only: bool = Field(
-        default=False,
-        description="True ONLY if the JD explicitly mandates B.Tech/B.E. and excludes B.Sc/BCA",
-    )
+    min_required_yoe: Optional[float] = Field(default=None)
+    strict_btech_be_only: bool = Field(default=False)
     role_level: Literal["intern", "entry", "mid", "senior", "staff", "unknown"] = "entry"
     must_have_skills: List[str] = Field(default_factory=list)
     nice_to_have_skills: List[str] = Field(default_factory=list)
@@ -113,14 +108,8 @@ class OutreachDraftPayload(BaseModel):
     email_body: str
     linkedin_note: str
     claimed_skills: List[str]
-    referenced_experience_ids: List[str] = Field(
-        default_factory=list,
-        description="exp_ids from candidate_profile cited in the email",
-    )
-    referenced_project_ids: List[str] = Field(
-        default_factory=list,
-        description="project_ids from candidate_profile cited in the email",
-    )
+    referenced_experience_ids: List[str] = Field(default_factory=list)
+    referenced_project_ids: List[str] = Field(default_factory=list)
     included_urls: List[str] = Field(default_factory=list)
 
 
@@ -140,7 +129,9 @@ class JobApplicationState(TypedDict):
     job_url: str
     raw_jd_text: str
 
-    # Gatekeeper & Matcher outputs
+    discovered_emails: Optional[List[str]]
+    scrape_error: Optional[str]
+
     parsed_jd: Optional[ParsedJD]
     is_qualified: Optional[bool]
     disqualification_reason: Optional[str]
@@ -148,15 +139,12 @@ class JobApplicationState(TypedDict):
     matched_skills: Optional[List[str]]
     missing_must_have_skills: Optional[List[str]]
 
-    # Outreach Writer & Critic loop outputs
     outreach_draft: Optional[OutreachDraftPayload]
     harness_report: Optional[HarnessCheckResult]
     critic_eval: Optional[CriticEvaluation]
     revision_count: int
 
-    # Human-in-the-loop & export/dispatch
     human_decision: Optional[Literal["approve", "edit", "skip"]]
     dispatch_status: Optional[str]
 
-    # Append-only audit log
     audit_log: Annotated[List[str], add]
