@@ -1,0 +1,75 @@
+cases:
+  - case_id: "eval_01_lyfverse_fastapi_payments"
+    company_name: "FinFlow India"
+    role_title: "Software Engineer - Backend"
+    location: "Bangalore"
+    role_category: "backend"
+    role_level: "entry"
+    min_required_yoe: 1.0
+    strict_btech_be_only: false
+    must_have_skills: ["Python", "FastAPI", "Redis", "MySQL", "Razorpay", "Stripe", "AWS"]
+    nice_to_have_skills: ["React.js", "Cloudflare"]
+    expected_qualified: true
+    expected_top_experience: "exp_lyfverse"
+
+  - case_id: "eval_02_vibtree_django_rag_serverless"
+    company_name: "VoiceAI Labs"
+    role_title: "AI & Backend Engineer"
+    location: "Bangalore"
+    role_category: "ai_engineer"
+    role_level: "entry"
+    min_required_yoe: 1.5
+    strict_btech_be_only: false
+    must_have_skills: ["Python", "Django", "PostgreSQL", "AWS Lambda", "AWS SQS", "LangChain", "RAG", "LLaMA 2"]
+    nice_to_have_skills: ["Node-RED"]
+    expected_qualified: true
+    expected_top_experience: "exp_vibtree"
+
+  - case_id: "eval_03_realtime_webrtc_websockets"
+    company_name: "StreamSync"
+    role_title: "Full Stack Engineer (Real-Time)"
+    location: "Remote"
+    role_category: "full-stack"
+    role_level: "entry"
+    min_required_yoe: 1.0
+    strict_btech_be_only: false
+    must_have_skills: ["JavaScript", "Node.js", "React.js", "WebRTC", "Socket.IO", "MongoDB"]
+    nice_to_have_skills: ["SFU Architecture", "Redis Pub/Sub"]
+    expected_qualified: true
+    expected_top_project: "proj_webrtc"
+
+  - case_id: "eval_04_reject_java_springboot_stack"
+    company_name: "BankCorp"
+    role_title: "Associate Backend Engineer"
+    location: "Bangalore"
+    role_category: "backend"
+    role_level: "entry"
+    min_required_yoe: 1.0
+    strict_btech_be_only: false
+    must_have_skills: ["Java", "Spring Boot", "Hibernate", "Kafka", "Oracle"]
+    nice_to_have_skills: ["Kotlin"]
+    expected_qualified: false
+
+  - case_id: "eval_05_reject_strict_btech_gate"
+    company_name: "GateKeep Tech"
+    role_title: "Junior Python Developer"
+    location: "Bangalore"
+    role_category: "backend"
+    role_level: "entry"
+    min_required_yoe: 1.0
+    strict_btech_be_only: true
+    must_have_skills: ["Python", "Django", "PostgreSQL"]
+    nice_to_have_skills: []
+    expected_qualified: false
+
+  - case_id: "eval_06_reject_senior_high_yoe"
+    company_name: "CloudScale"
+    role_title: "Senior Staff Backend Engineer"
+    location: "Bangalore"
+    role_category: "backend"
+    role_level: "senior"
+    min_required_yoe: 6.0
+    strict_btech_be_only: false
+    must_have_skills: ["Python", "FastAPI", "PostgreSQL", "Redis"]
+    nice_to_have_skills: []
+    expected_qualified: false
