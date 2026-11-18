@@ -9,6 +9,9 @@ __pycache__/
 dist/
 build/
 
+# Generated lead exports
+outputs/
+
 # Environment variables & secrets
 .env
 .env.*
