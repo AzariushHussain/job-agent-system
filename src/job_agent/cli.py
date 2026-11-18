@@ -21,8 +21,15 @@ def main():
     parser = argparse.ArgumentParser(
         description="Run the LangGraph Job Application Pipeline and export vetted leads to Excel/CSV."
     )
-    parser.add_argument("--url", type=str, default="", help="Job posting URL")
-    parser.add_argument("--jd-file", type=str, default="", help="Path to raw JD text file")
+    parser.add_argument("--url", type=str, default="", help="Single job posting URL to scrape from the web")
+    parser.add_argument("--jd-file", type=str, default="", help="Optional path to raw JD text file")
+    parser.add_argument(
+        "--auto-search",
+        type=str,
+        default="",
+        help="Search query to automatically find and process job URLs from the web",
+    )
+    parser.add_argument("--max-jobs", type=int, default=3, help="Max jobs to fetch when using --auto-search")
     parser.add_argument(
         "--demo",
         action="store_true",
@@ -78,25 +85,56 @@ def main():
             smtp_prober=lambda email, mx: "smtp_verified",
             enable_hitl=False,
         )
-        raw_text = (
-            "Hiring Full-Stack & AI Engineer in Bangalore (1-2 yrs). Stack: Python, FastAPI, Django, "
-            "React.js, PostgreSQL, Redis, RAG. Contact careers@nexusolve.io."
+        final_state = graph.invoke(
+            {
+                "job_url": "https://nexusolve.io/careers/fullstack-ai",
+                "raw_jd_text": (
+                    "Hiring Full-Stack & AI Engineer in Bangalore (1-2 yrs). Stack: Python, FastAPI, Django, "
+                    "React.js, PostgreSQL, Redis, RAG. Contact careers@nexusolve.io."
+                ),
+                "revision_count": 0,
+                "audit_log": [],
+            }
         )
-        job_url = "https://nexusolve.io/careers/fullstack-ai"
-    else:
-        raw_text = Path(args.jd_file).read_text(encoding="utf-8") if args.jd_file else ""
-        job_url = args.url
-        graph = compile_job_application_graph(enable_hitl=False)
+        print(json.dumps({"dispatch_status": final_state.get("dispatch_status"), "audit_log": final_state.get("audit_log")}, indent=2))
+        return
 
+    graph = compile_job_application_graph(enable_hitl=False)
+
+    # Mode A: Autonomous Web Search & Batch Scraping
+    if args.auto_search:
+        from src.job_agent.tools.job_search import discover_job_urls
+
+        urls = discover_job_urls(query=args.auto_search, max_results=args.max_jobs)
+        print(f"Discovered {len(urls)} job URLs from the web: {urls}")
+        for url in urls:
+            state = graph.invoke(
+                {"job_url": url, "raw_jd_text": "", "revision_count": 0, "audit_log": []}
+            )
+            print(
+                json.dumps(
+                    {
+                        "job_url": url,
+                        "is_qualified": state.get("is_qualified"),
+                        "tech_match_score": state.get("tech_match_score"),
+                        "dispatch_status": state.get("dispatch_status"),
+                        "audit_log": state.get("audit_log"),
+                    },
+                    indent=2,
+                )
+            )
+        return
+
+    # Mode B: Single URL or Local JD File
+    raw_text = Path(args.jd_file).read_text(encoding="utf-8") if args.jd_file else ""
     final_state = graph.invoke(
         {
-            "job_url": job_url,
+            "job_url": args.url,
             "raw_jd_text": raw_text,
             "revision_count": 0,
             "audit_log": [],
         }
     )
-
     print(
         json.dumps(
             {

@@ -13,8 +13,8 @@ class Settings(BaseSettings):
     groq_api_key: str = ""
     openai_api_key: str = ""
 
-    fast_model_name: str = "llama-3.3-70b-versatile"
-    writer_model_name: str = "llama-3.3-70b-versatile"
+    fast_model_name: str = "openai/gpt-oss-20b"
+    writer_model_name: str = "openai/gpt-oss-120b"
     temperature: float = 0.1
 
     max_revisions: int = 2
