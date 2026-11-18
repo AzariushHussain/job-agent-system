@@ -10,6 +10,7 @@ cases:
     must_have_skills: ["Python", "FastAPI", "Redis", "MySQL", "Razorpay", "Stripe", "AWS"]
     nice_to_have_skills: ["React.js", "Cloudflare"]
     expected_qualified: true
+    expected_next_node: "outreach_writer"
     expected_top_experience: "exp_lyfverse"
 
   - case_id: "eval_02_vibtree_django_rag_serverless"
@@ -23,6 +24,7 @@ cases:
     must_have_skills: ["Python", "Django", "PostgreSQL", "AWS Lambda", "AWS SQS", "LangChain", "RAG", "LLaMA 2"]
     nice_to_have_skills: ["Node-RED"]
     expected_qualified: true
+    expected_next_node: "outreach_writer"
     expected_top_experience: "exp_vibtree"
 
   - case_id: "eval_03_realtime_webrtc_websockets"
@@ -36,6 +38,7 @@ cases:
     must_have_skills: ["JavaScript", "Node.js", "React.js", "WebRTC", "Socket.IO", "MongoDB"]
     nice_to_have_skills: ["SFU Architecture", "Redis Pub/Sub"]
     expected_qualified: true
+    expected_next_node: "outreach_writer"
     expected_top_project: "proj_webrtc"
 
   - case_id: "eval_04_reject_java_springboot_stack"
@@ -49,6 +52,7 @@ cases:
     must_have_skills: ["Java", "Spring Boot", "Hibernate", "Kafka", "Oracle"]
     nice_to_have_skills: ["Kotlin"]
     expected_qualified: false
+    expected_next_node: "end"
 
   - case_id: "eval_05_reject_strict_btech_gate"
     company_name: "GateKeep Tech"
@@ -61,6 +65,7 @@ cases:
     must_have_skills: ["Python", "Django", "PostgreSQL"]
     nice_to_have_skills: []
     expected_qualified: false
+    expected_next_node: "end"
 
   - case_id: "eval_06_reject_senior_high_yoe"
     company_name: "CloudScale"
@@ -73,3 +78,4 @@ cases:
     must_have_skills: ["Python", "FastAPI", "PostgreSQL", "Redis"]
     nice_to_have_skills: []
     expected_qualified: false
+    expected_next_node: "end"
